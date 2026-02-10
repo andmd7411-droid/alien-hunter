@@ -1,0 +1,69 @@
+:root {
+  /* Premium Dark Theme Palette */
+  --bg-app: #0a0a0c;
+  --bg-sidebar: #111114;
+  --bg-card: #18181b;
+  --bg-card-hover: #222226;
+
+  --accent-primary: #6366f1; /* Indigo-500 */
+  --accent-glow: rgba(99, 102, 241, 0.5);
+  --accent-secondary: #ec4899; /* Pink-500 */
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --border-subtle: #27272a;
+  --border-highlight: #3f3f46;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(24, 24, 27, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --blur-md: 12px;
+
+  /* Animation */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
