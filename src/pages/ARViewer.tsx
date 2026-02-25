@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, ContactShadows } from '@react-three/drei';
 import AnimatedShape, { type ShapeType } from '../components/AnimatedShape';
 import CameraFeed from '../components/CameraFeed';
-import { Trophy, Clock, Target, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { soundManager } from '../utils/SoundManager';
 import { Explosion } from '../components/Explosion';
