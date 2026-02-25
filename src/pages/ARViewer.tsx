@@ -135,8 +135,8 @@ const ARViewer: React.FC = () => {
                 onClick={() => navigate('/')}
                 style={{
                     position: 'absolute',
-                    top: 'max(20px, env(safe-area-inset-top))',
-                    left: 'max(20px, env(safe-area-inset-left))',
+                    top: '20px',
+                    left: '20px',
                     zIndex: 9999, // Super high z-index
                     background: 'rgba(255, 255, 255, 0.4)',
                     border: '2px solid rgba(255,255,255,0.8)',
@@ -154,30 +154,34 @@ const ARViewer: React.FC = () => {
                 <ArrowLeft size={28} />
             </button>
 
-            {/* 2. HUD Overlay */}
+            {/* 2. HUD Overlay (RETRO GREEN STYLE) */}
             <div style={{
-                position: 'absolute',
-                top: 'max(80px, env(safe-area-inset-top))', // well below the back button and notch
-                left: 'max(20px, env(safe-area-inset-left))',
-                zIndex: 9999, // Make sure it's above everything
+                position: 'fixed', // Use fixed to ensure it ignores any parent #root padding 
+                top: '80px', // simple value to avoid CSS env() breaking
+                left: '20px',
+                zIndex: 99999, // Make absolutely sure it's above everything
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-start', // Align left like the old UI
-                gap: '12px',
-                pointerEvents: 'none' // Let clicks pass through to Canvas
+                alignItems: 'flex-start',
+                gap: '8px',
+                pointerEvents: 'none', // Let clicks pass through to Canvas
+                fontFamily: 'monospace', // Ensure retro font
+                textShadow: '0 0 5px #4ade80, 0 0 10px #4ade80', // green glow like original
             }}>
-                <div style={{ background: 'rgba(0, 0, 0, 0.8)', padding: '10px 20px', borderRadius: '12px', color: '#4ade80', display: 'flex', alignItems: 'center', gap: '12px', border: '2px solid #4ade80', fontSize: '1.2rem', fontFamily: 'monospace' }}>
-                    <Trophy size={20} color="#4ade80" />
-                    <span style={{ fontWeight: 'bold' }}>SCORE: {score.toString().padStart(6, '0')}</span>
-                    <span style={{ fontSize: '0.9rem', color: '#86efac' }}>(HI: {highScore.toString().padStart(6, '0')})</span>
+                <div style={{ color: '#4ade80', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                    HI-SCORE: {highScore.toString().padStart(6, '0')}
                 </div>
-                <div style={{ background: 'rgba(0, 0, 0, 0.8)', padding: '10px 20px', borderRadius: '12px', color: timeLeft < 10 ? '#ef4444' : '#60a5fa', display: 'flex', alignItems: 'center', gap: '12px', border: `2px solid ${timeLeft < 10 ? '#ef4444' : '#60a5fa'}`, fontSize: '1.2rem', fontFamily: 'monospace' }}>
-                    <Clock size={20} />
-                    <span style={{ fontWeight: 'bold' }}>TIME: {timeLeft}s</span>
+                <div style={{ color: '#4ade80', fontSize: '1.8rem', fontWeight: 'bold' }}>
+                    SCORE: {score.toString().padStart(6, '0')}
                 </div>
-                <div style={{ background: 'rgba(0, 0, 0, 0.8)', padding: '10px 20px', borderRadius: '12px', color: '#facc15', display: 'flex', alignItems: 'center', gap: '12px', border: '2px solid #facc15', fontSize: '1.2rem', fontFamily: 'monospace' }}>
-                    <Target size={20} />
-                    <span style={{ fontWeight: 'bold' }}>LEVEL: {level}</span>
+                <div style={{ color: '#4ade80', fontSize: '1.3rem', fontWeight: 'bold', marginTop: '10px' }}>
+                    LEVEL: {level}
+                </div>
+                <div style={{ color: '#4ade80', fontSize: '1.3rem', fontWeight: 'bold' }}>
+                    TIME LEFT: {timeLeft}s
+                </div>
+                <div style={{ color: '#a855f7', fontSize: '0.8rem', fontWeight: 'bold', marginTop: '5px' }}>
+                    VER 2.1 PWA (CACHE OK)
                 </div>
             </div>
 
