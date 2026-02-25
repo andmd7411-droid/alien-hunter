@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { AlienUFO, AlienSpike, AlienDroid, AlienTorusBot } from './ComplexAliens';
@@ -52,7 +52,6 @@ const AnimatedShape: React.FC<AnimatedShapeProps> = ({ type, color, position, na
                 // A value > threshold means visible. 
                 // We want it mostly invisible (translucent-ish) but R3F opacity is hard to flicker cheaply without materials.
                 // Flickering "visible" prop is a cheap valid stealth effect (like a cloaking device failing).
-                const noise = Math.sin(time * 10 + floatPhase) * Math.cos(time * 5);
                 // "Visible" 10% of the time randomly, effectively creating a glitchy ghost effect
                 geometryRef.current.visible = Math.random() > 0.85;
             } else {
@@ -68,7 +67,7 @@ const AnimatedShape: React.FC<AnimatedShapeProps> = ({ type, color, position, na
         }
     });
 
-    const handleClick = (e: THREE.Event) => {
+    const handleClick = (e: ThreeEvent<any>) => {
         e.stopPropagation();
         if (active) return; // prevent double clicks
 

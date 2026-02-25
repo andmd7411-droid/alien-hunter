@@ -125,7 +125,7 @@ const ARViewer: React.FC = () => {
     };
 
     return (
-        <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative', background: 'transparent' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', overflow: 'hidden', background: 'transparent', zIndex: 1000, margin: 0, padding: 0 }}>
 
             {/* 1. Camera Feed Layer (Background) */}
             <CameraFeed />
@@ -135,46 +135,49 @@ const ARViewer: React.FC = () => {
                 onClick={() => navigate('/')}
                 style={{
                     position: 'absolute',
-                    top: 20,
-                    left: 20,
-                    zIndex: 50,
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    border: 'none',
+                    top: 'max(20px, env(safe-area-inset-top))',
+                    left: 'max(20px, env(safe-area-inset-left))',
+                    zIndex: 9999, // Super high z-index
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    border: '2px solid rgba(255,255,255,0.8)',
                     borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
+                    width: '50px',
+                    height: '50px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'white',
-                    backdropFilter: 'blur(4px)',
+                    backdropFilter: 'blur(8px)',
                     cursor: 'pointer'
                 }}
             >
-                <ArrowLeft size={24} />
+                <ArrowLeft size={28} />
             </button>
 
             {/* 2. HUD Overlay */}
             <div style={{
                 position: 'absolute',
-                top: 20,
-                right: 20, // Move HUD to right to not overlap back button
-                zIndex: 10,
+                top: 'max(80px, env(safe-area-inset-top))', // well below the back button and notch
+                left: 'max(20px, env(safe-area-inset-left))',
+                zIndex: 9999, // Make sure it's above everything
                 display: 'flex',
-                gap: '12px'
+                flexDirection: 'column',
+                alignItems: 'flex-start', // Align left like the old UI
+                gap: '12px',
+                pointerEvents: 'none' // Let clicks pass through to Canvas
             }}>
-                <div style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', padding: '8px 16px', borderRadius: '12px', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Trophy size={18} className="text-yellow-400" />
-                    <span style={{ fontWeight: 700 }}>{score}</span>
-                    <span style={{ fontSize: '0.8rem', opacity: 0.7 }}>(HI: {highScore})</span>
+                <div style={{ background: 'rgba(0, 0, 0, 0.8)', padding: '10px 20px', borderRadius: '12px', color: '#4ade80', display: 'flex', alignItems: 'center', gap: '12px', border: '2px solid #4ade80', fontSize: '1.2rem', fontFamily: 'monospace' }}>
+                    <Trophy size={20} color="#4ade80" />
+                    <span style={{ fontWeight: 'bold' }}>SCORE: {score.toString().padStart(6, '0')}</span>
+                    <span style={{ fontSize: '0.9rem', color: '#86efac' }}>(HI: {highScore.toString().padStart(6, '0')})</span>
                 </div>
-                <div style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', padding: '8px 16px', borderRadius: '12px', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Clock size={18} className={timeLeft < 10 ? "text-red-400" : "text-blue-400"} />
-                    <span style={{ fontWeight: 700 }}>{timeLeft}s</span>
+                <div style={{ background: 'rgba(0, 0, 0, 0.8)', padding: '10px 20px', borderRadius: '12px', color: timeLeft < 10 ? '#ef4444' : '#60a5fa', display: 'flex', alignItems: 'center', gap: '12px', border: `2px solid ${timeLeft < 10 ? '#ef4444' : '#60a5fa'}`, fontSize: '1.2rem', fontFamily: 'monospace' }}>
+                    <Clock size={20} />
+                    <span style={{ fontWeight: 'bold' }}>TIME: {timeLeft}s</span>
                 </div>
-                <div style={{ background: 'rgba(99, 102, 241, 0.8)', padding: '8px 16px', borderRadius: '8px', color: 'white', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Target size={18} />
-                    <span style={{ fontWeight: 700 }}>Level {level}</span>
+                <div style={{ background: 'rgba(0, 0, 0, 0.8)', padding: '10px 20px', borderRadius: '12px', color: '#facc15', display: 'flex', alignItems: 'center', gap: '12px', border: '2px solid #facc15', fontSize: '1.2rem', fontFamily: 'monospace' }}>
+                    <Target size={20} />
+                    <span style={{ fontWeight: 'bold' }}>LEVEL: {level}</span>
                 </div>
             </div>
 
@@ -216,7 +219,7 @@ const ARViewer: React.FC = () => {
 
             {/* 4. 3D Scene Layer */}
             {/* Note: gl={{ alpha: true }} ensures canvas background is transparent so video shows through */}
-            <Canvas camera={{ position: [0, 3, 8], fov: 50 }} gl={{ alpha: true }} style={{ background: 'transparent' }}>
+            <Canvas camera={{ position: [0, 3, 8], fov: 50 }} gl={{ alpha: true }} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'transparent', zIndex: 10 }}>
                 <Suspense fallback={null}>
                     {/* ... lights ... */}
                     <ambientLight intensity={0.4} />

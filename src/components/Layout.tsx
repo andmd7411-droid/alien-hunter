@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, Zap, Box, Scan, Github } from 'lucide-react';
+import { LayoutDashboard, Zap, Box, Scan } from 'lucide-react';
 
 const Layout: React.FC = () => {
     return (

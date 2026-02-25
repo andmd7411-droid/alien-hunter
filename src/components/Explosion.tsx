@@ -23,7 +23,7 @@ export const Explosion: React.FC<ExplosionProps> = ({ position, color, onComplet
         }));
     }, []);
 
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (!groupRef.current) return;
         let activeParticles = false;
 
